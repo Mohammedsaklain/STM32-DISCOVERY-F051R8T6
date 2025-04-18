@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Mohammed Saklain/Downloads/stmf0_template-master/stmf0_template-master",
-      "program": "c:/Users/Mohammed Saklain/Downloads/stmf0_template-master/stmf0_template-master/build/Debug/outDebug",
+      "cwd": "d:/C_C++_FILES/STM32/STM32_GIT/STM32-DISCOVERY-F051R8T6",
+      "program": "d:/C_C++_FILES/STM32/STM32_GIT/STM32-DISCOVERY-F051R8T6/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
