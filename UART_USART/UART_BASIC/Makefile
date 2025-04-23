@@ -10,6 +10,7 @@ SRC = stm32f051r8_startup.c
 SRC += ./src/main.c
 SRC += ./src/rcc.c
 SRC += ./src/gpio.c
+SRC += ./src/uart.c
 
 $(OUT):
 	arm-none-eabi-gcc -g -o $(OUT).elf $(CFLAGS) $(SRC)

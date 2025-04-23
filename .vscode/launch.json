@@ -2,23 +2,29 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "C/C++ Runner: Debug Session",
-      "type": "cppdbg",
+      "cwd": "${workspaceFolder}",
+      "executable": "D:/C_C++_FILES/STM32/STM32_GIT/STM32-DISCOVERY-F051R8T6/EXT_INTERRUPT/EXT_INTERUUPT.elf",
+      "name": "Debug with ST-Link",
       "request": "launch",
-      "args": [],
-      "stopAtEntry": false,
-      "externalConsole": true,
-      "cwd": "d:/C_C++_FILES/STM32/STM32_GIT/STM32-DISCOVERY-F051R8T6",
-      "program": "d:/C_C++_FILES/STM32/STM32_GIT/STM32-DISCOVERY-F051R8T6/build/Debug/outDebug",
-      "MIMode": "gdb",
-      "miDebuggerPath": "gdb",
-      "setupCommands": [
-        {
-          "description": "Enable pretty-printing for gdb",
-          "text": "-enable-pretty-printing",
-          "ignoreFailures": true
-        }
+      "type": "cortex-debug",
+      "runToEntryPoint": "main",
+      "showDevDebugOutput": "none",
+      "servertype": "stlink"
+    },
+    {
+      "cwd": "${workspaceFolder}",
+      "executable": "D:/C_C++_FILES/STM32/STM32_GIT/STM32-DISCOVERY-F051R8T6/EXT_INTERRUPT/EXT_INTERUUPT.elf",
+      "name": "Debug with OpenOCD",
+      "request": "launch",
+      "type": "cortex-debug",
+      "runToEntryPoint": "main",
+      "showDevDebugOutput": "none",
+      "servertype": "openocd",
+      "configFiles": [
+        "D:/C_C++_FILES/STM32/STM32_TOOLS/openocd-v0.12.0-i686-w64-mingw32/share/openocd/scripts/interface/stlink.cfg",
+        "D:/C_C++_FILES/STM32/STM32_TOOLS/openocd-v0.12.0-i686-w64-mingw32/share/openocd/scripts/target/stm32f0x.cfg"
       ]
     }
-  ]
+  ],
 }
+
