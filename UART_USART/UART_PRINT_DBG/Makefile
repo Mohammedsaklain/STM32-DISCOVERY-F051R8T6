@@ -1,8 +1,10 @@
-OUT = EXT_INTERRUPT
+OUT = UART_PRT_DBG
 CFLAGS = -T stm32f051r8.ld
 CFLAGS += -mlittle-endian -mthumb -mcpu=cortex-m0 -mthumb-interwork
 CFLAGS += -mfloat-abi=soft -mfpu=fpv4-sp-d16
-CFLAGS += -nostdlib
+#CFLAGS += -nostdlib
+
+
 CFLAGS += -I.
 CFLAGS += -Iinc
 
@@ -10,10 +12,10 @@ SRC = stm32f051r8_startup.c
 SRC += ./src/main.c
 SRC += ./src/rcc.c
 SRC += ./src/gpio.c
-SRC += ./src/ext_int.c
+SRC += ./src/uart.c
 
 $(OUT):
-	arm-none-eabi-gcc -g -o $(OUT).elf $(CFLAGS) $(SRC)
+	arm-none-eabi-gcc -g -o $(OUT).elf $(CFLAGS) $(SRC) $(LDFLAGS)
 	arm-none-eabi-objcopy -O binary $(OUT).elf $(OUT).bin
 	
 .PHONY:  clean flash info
