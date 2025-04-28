@@ -3,7 +3,7 @@
   "configurations": [
     {
       "cwd": "${workspaceFolder}",
-      "executable": "D:/C_C++_FILES/STM32/STM32_GIT/STM32-DISCOVERY-F051R8T6/EXT_INTERRUPT/EXT_INTERUUPT.elf",
+      "executable": "D:/C_C++_FILES/STM32/STM32_GIT/STM32-DISCOVERY-F051R8T6/UART_USART/UART_INT/UART_INT.elf",
       "name": "Debug with ST-Link",
       "request": "launch",
       "type": "cortex-debug",
