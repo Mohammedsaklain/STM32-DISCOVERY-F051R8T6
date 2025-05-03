@@ -1,5 +1,12 @@
 {
   "cortex-debug.gdbPath": "C:/Program Files (x86)/GNU Arm Embedded Toolchain/10 2021.10/bin/arm-none-eabi-gdb",
   "cortex-debug.openocdPath": "D:/C_C++_FILES/STM32/STM32_TOOLS/openocd-v0.12.0-i686-w64-mingw32/bin/openocd",
-  "cortex-debug.stlinkPath": "D:/C_C++_FILES/STM32/STM32_TOOLS/stlink-1.7.0-x86_64-w64-mingw32/stlink-1.7.0-x86_64-w64-mingw32/bin/st-util.exe"
+  "cortex-debug.stlinkPath": "D:/C_C++_FILES/STM32/STM32_TOOLS/stlink-1.7.0-x86_64-w64-mingw32/stlink-1.7.0-x86_64-w64-mingw32/bin/st-util.exe",
+  "C_Cpp.dimInactiveRegions": false,
+  "files.associations": {
+    "timer.h": "c",
+    "rcc.h": "c",
+    "stm32f0xx.h": "c",
+    "timer_dr.h": "c"
+  }
 }

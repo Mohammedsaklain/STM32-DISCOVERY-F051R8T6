@@ -12,10 +12,12 @@ int main()
 	Timer6_Init();
 	while(1)
 	{
-		GPIOC->ODR |= (1<<8);
-		Delay_uS(10);
-		GPIOC->ODR &= ~(1<<8);
-		Delay_uS(10);
+		GPIOC->ODR |= GPIO_ODR_8;
+		//Delay_uS(50);
+		Delay_mS(1000);
+		GPIOC->ODR &= ~GPIO_ODR_8;
+		//Delay_uS(50);
+		Delay_mS(1000);
 	}
 	return 0;
 }
