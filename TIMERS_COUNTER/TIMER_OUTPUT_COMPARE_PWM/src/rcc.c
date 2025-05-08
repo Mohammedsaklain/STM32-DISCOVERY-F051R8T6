@@ -9,12 +9,12 @@ void rcc_clock_config(void)
     RCC->CFGR|= RCC_CFGR_HPRE_DIV1;             // AHB prescaler to 1 (ie NO SYSCLK divided)
     RCC->CFGR|= RCC_CFGR_PPRE_DIV1;             // NO HCLK divided
 
-    #ifdef GPIO_CLK                             // Enable Clk for IOC
-        RCC->AHBENR  |= (RCC_AHBENR_GPIOBEN | RCC_AHBENR_GPIOAEN | RCC_AHBENR_GPIOCEN);  
+    #ifdef GPIO_CLK
+        RCC->AHBENR  |= (RCC_AHBENR_GPIOBEN | RCC_AHBENR_GPIOAEN);     // Enable Clk for IOC
     #endif
 
     #ifdef TIMER__2_3_6_14_APB1_CLK             // Timer Clk
-        RCC->APB1ENR |= (RCC_APB1ENR_TIM2EN | RCC_APB1ENR_TIM3EN | RCC_APB1ENR_USART2EN);
+        RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
     #endif
 
     #ifdef TIMER__1_15_16_17_APB2_CLK

@@ -12,7 +12,7 @@ int main()
 	while(1)
 	{
 		MSprint("Hello Kaynes unit - %d",0);
-		for(int i=0;i<9000000;i++);
+		for(int i=0;i<90000;i++);
 	}
 	return 0;
 }

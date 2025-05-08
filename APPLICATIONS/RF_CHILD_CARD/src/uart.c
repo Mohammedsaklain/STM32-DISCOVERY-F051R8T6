@@ -5,7 +5,7 @@ void Init_UART(void)
 {
     /* Clearing Required Bits in USART_CR1 control Reg*/
     USART2->CR1 &= ~(   (1<<28) | /* Clearing M1 for 1-SB, 8-DB (28)*/
-                        (3U<<26) | /* Interrupts Inhibited       (27-26)*/
+                        (3<<26) | /* Interrupts Inhibited       (27-26)*/
                         (1<<15) | /* Oversampling mode 16x      (15)*/
                         (1<<14) | /* Inhibit Interrupt          (14)*/
                         (1<<13) | /* RX active mode permanent   (13)*/
@@ -42,38 +42,51 @@ void Init_UART(void)
     /* set the baud rate value register*/
     USART2->BRR = 69; /* set for BD 115200, with 8MHz, and shifted [2-0] bits obtained to right 1 Pos*/
 
-    /* Enable required bits in USART2_CR1*/
-    USART2->CR1 |=   (USART_CR1_RXNEIE// Enable Receive Int.
-                     |USART_CR1_TXEIE // Enable Transmit Int.
-                     |USART_CR1_TE    // Enable Transmitter
-                     |USART_CR1_RE    // Enable Receiver
-                     |USART_CR1_UE);  // Enable UART2
-    
-    NVIC_EnableIRQ(USART2_IRQn);    // Enable USART2 Int.
+    USART2->CR1 |=   (USART_CR1_TE    //Enable Transmitter
+                     |USART_CR1_RE    //Enable Receiver
+                     |USART_CR1_UE);  //Enable UART1
 }
 
-/* ISR for UART2 
-NOTE: All the int. occured for UART2 will be directed to here*/
-
-void USART2_IRQHandler(void)
+uint8_t receiveUART2(void)
 {
     uint8_t rxData = 0;
     /* Check if there is a data in RECEIVE DATA REGISTER*/
     // Here USART_ISR_RXNE is just a (1<<5) value
     if(USART2->ISR & USART_ISR_RXNE)
     {
-        rxData = USART2->RDR;   // Store the data in temp variable
-
-        USART2->TDR = rxData;   // Transmit again to received data
-        // Wait till the data has been transferred 
-        while(!USART2->ISR & USART_ISR_TC);
+        rxData = USART2->RDR;
     }
-    else if(USART3->ISR & USART_ISR_TXE)
-    {
-        //Handling Transmit Int.
-    }
-
-    /* Note that we only direct to this ISR even though we have separate 
-       Int. for Tx & Rx, we have to manually check which Int. has been occured*/
+    return rxData;
 }
 
+void transmit_Char_UART2(char c)
+{
+    /* Wait until TRANSMIT DATA REGISTER is ready to take data*/
+    // Here USART_ISR_TXE is juat a (1<<7) value
+    while(!(USART2->ISR & USART_ISR_TXE));
+
+    // Simply send the data through TDR, when it's ready
+    USART2->TDR = c; 
+}
+
+void MSprint_Char(char *string)
+{
+    while (*string)
+    {
+        transmit_Char_UART2(*string ++);
+    }
+}
+
+void transmit_Integer(uint32_t No)
+{
+    while(!(USART2->ISR & USART_ISR_TXE));
+    USART2->TDR = No; 
+}
+
+void MSprint_Integer(uint32_t *Data)
+{
+    while (*Data)
+    {
+        transmit_Char_UART2(*Data++);
+    }
+}

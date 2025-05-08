@@ -1,4 +1,4 @@
-OUT = RF_CHILD_CARD
+OUT = INPUT_CAPTURE
 CFLAGS = -T stm32f051r8.ld
 CFLAGS += -mlittle-endian -mthumb -mcpu=cortex-m0 -mthumb-interwork
 CFLAGS += -mfloat-abi=soft -mfpu=fpv4-sp-d16
@@ -13,8 +13,6 @@ SRC += ./src/gpio_dr.c
 SRC += ./src/timer_dr.c
 SRC += ./src/ISR.c
 SRC += ./src/ext_int.c
-SRC += ./src/rf_data.c
-SRC += ./src/uart.c
 
 #providing necessary Library for linker with -lgcc
 $(OUT):

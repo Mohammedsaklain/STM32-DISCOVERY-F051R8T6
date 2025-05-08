@@ -1,5 +1,8 @@
 #include "rcc.h"
 #include "uart.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdarg.h>
 
 void Init_UART(void)
 {
@@ -26,6 +29,6 @@ void MSprint(char *msg, ...)    //... represents that no of arguments will be pa
     for(int i=0; i< strlen(buff); i++)
     {
         USART2->TDR = buff[i];
-        while(!USART2->ISR & USART_ISR_TXE);    //wait till Transmit data is Empty
+        while(!((USART2->ISR) & (USART_ISR_TXE)));    //wait till Transmit data is Empty
     }
 }

@@ -3,7 +3,7 @@
   "configurations": [
     {
       "cwd": "${workspaceFolder}",
-      "executable": "D:/C_C++_FILES/STM32/STM32_GIT/STM32-DISCOVERY-F051R8T6/TIMERS_COUNTER/TEST/TEST.elf",
+      "executable": "D:/C_C++_FILES/STM32/STM32_GIT/STM32-DISCOVERY-F051R8T6/TIMERS_COUNTER/TIMER_INPUT_CAPTURE/INPUT_CAPTURE.elf",
       "name": "Debug with ST-Link",
       "request": "launch",
       "type": "cortex-debug",

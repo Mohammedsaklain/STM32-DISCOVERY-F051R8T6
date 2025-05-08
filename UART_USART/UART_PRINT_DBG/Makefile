@@ -1,10 +1,8 @@
-OUT = UART_PRT_DBG
+OUT = UART_DBG
 CFLAGS = -T stm32f051r8.ld
 CFLAGS += -mlittle-endian -mthumb -mcpu=cortex-m0 -mthumb-interwork
 CFLAGS += -mfloat-abi=soft -mfpu=fpv4-sp-d16
 #CFLAGS += -nostdlib
-
-
 CFLAGS += -I.
 CFLAGS += -Iinc
 
@@ -14,11 +12,13 @@ SRC += ./src/rcc.c
 SRC += ./src/gpio.c
 SRC += ./src/uart.c
 
+#providing necessary Library for linker with -lgcc
 $(OUT):
-	arm-none-eabi-gcc -g -o $(OUT).elf $(CFLAGS) $(SRC) $(LDFLAGS)
+	arm-none-eabi-gcc -Wall -g -o $(OUT).elf $(CFLAGS) $(SRC) -specs=nosys.specs -lc -lgcc  
 	arm-none-eabi-objcopy -O binary $(OUT).elf $(OUT).bin
+	arm-none-eabi-size $(OUT).elf
 	
-.PHONY:  clean flash info
+.PHONY:  clean flash info gdb_server
 clean:
 	rm $(OUT).elf $(OUT).bin
 flash: 

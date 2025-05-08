@@ -1,5 +1,3 @@
-/* THIS LD SCRIPT IS UPDATED FOR USING STD LIBRARIES, NEED TO BE TESTED */
-
 MEMORY
 {
     RAM(rwx) : ORIGIN = 0x20000000, LENGTH = 8K
@@ -8,20 +6,6 @@ MEMORY
 
 SECTIONS
 {
-    /* Define the .init section and place it in FLASH */
-    .init :
-    {
-        KEEP(*(.init))      /* Keep the .init section */
-        KEEP(*(.init.*))    /* Keep any .init subsections */
-    } > FLASH
-
-    /* Define the .fini section and place it in FLASH, typically after .init */
-    .fini :
-    {
-        KEEP(*(.fini))      /* Keep the .fini section */
-        KEEP(*(.fini.*))    /* Keep any .fini subsections */
-    } > FLASH
-
     .text :
     {
         . = ALIGN(4);
@@ -31,20 +15,6 @@ SECTIONS
         *(.rodata)
         *(.rodata*)
         . = ALIGN(4);
-    } > FLASH
-
-    /* Define the .eh_frame section and place it in FLASH */
-    .eh_frame :
-    {
-        KEEP(*(.eh_frame))
-        KEEP(*(.eh_frame.*)) /* Also include subsections if any */
-    } > FLASH
-
-    /* Define the .ARM.exidx section and place it in FLASH */
-    .ARM.exidx :
-    {
-        KEEP(*(.ARM.exidx))
-        KEEP(*(.ARM.exidx.*)) /* Also include subsections if any */
     } > FLASH
 
     _data_flash = .;
@@ -69,8 +39,6 @@ SECTIONS
         _bss_end = .;
         __bss_end__ = _bss_end;
     } > RAM
-
-    end = .;
 
     _stack_size = 1024;
     _stack_end = ORIGIN(RAM)+LENGTH(RAM);
