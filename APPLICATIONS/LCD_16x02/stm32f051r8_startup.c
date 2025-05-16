@@ -92,11 +92,11 @@ void (* const table_interrupt_vector[])(void) =
     PVD_IRQHandler,            // 17: PVD_IRQHandler
     RTC_IRQHandler,            // 18: RTC_IRQHandler
     FLASH_IRQHandler,          // 19: FLASH_IRQHandler
-    RCC_IRQHandler,        // 20: RCC_CRS_IRQHandler
+    RCC_IRQHandler,            // 20: RCC_CRS_IRQHandler
     EXTI0_1_IRQHandler,        // 21: EXTI0_1_IRQHandler
     EXTI2_3_IRQHandler,        // 22: EXTI2_3_IRQHandler
     EXTI4_15_IRQHandler,       // 23: EXTI4_15_IRQHandler
-    TS_IRQHandler,            // 24: TSC_IRQHandler
+    TS_IRQHandler,             // 24: TSC_IRQHandler
     DMA1_Channel1_IRQHandler,  // 25: DMA1_Channel1_IRQHandler
     DMA1_Channel2_3_IRQHandler,// 26: DMA1_Channel2_3_IRQHandler
     DMA1_Channel4_5_IRQHandler,// 27: DMA1_Channel4_5_IRQHandler
@@ -118,6 +118,6 @@ void (* const table_interrupt_vector[])(void) =
     USART1_IRQHandler,         // 43: USART1_IRQHandler
     USART2_IRQHandler,         // 44: USART2_IRQHandler
     0,                         // 45: Reserved
-    CEC_IRQHandler,        // 46: CEC_CAN_IRQHandler
+    CEC_IRQHandler,            // 46: CEC_CAN_IRQHandler
     0                          // 47: Reserved
 };
