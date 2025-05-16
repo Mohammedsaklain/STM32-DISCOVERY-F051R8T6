@@ -1,5 +1,4 @@
-##TIMER in "INPUT CAPTURE" mode
+## TIMER in "INPUT CAPTURE" mode
 
-
-![alt text](TIMER_INPUT_CAPTURE.png) <br>
-![alt text](INPUT_CAP_DEBUG.png)
+<img src="TIMER_INPUT_CAPTURE.png" alt="alt text" width="500">
+<img src="INPUT_CAP_DEBUG.png" alt="alt text" width="500">
