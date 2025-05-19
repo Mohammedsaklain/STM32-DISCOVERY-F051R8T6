@@ -1,4 +1,7 @@
-* .vscode
+*.vscode
 *.json
 *.elf
 *.bin
+app_build/
+test_build/
+Unity/
