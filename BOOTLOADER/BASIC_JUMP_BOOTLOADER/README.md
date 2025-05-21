@@ -74,4 +74,4 @@ You are now taking the application's vector table (which lives in Flash at 0x080
 
 The Stack grows downwards(Higher memory address to lower) and Heap grows upwards(Lower memory address to Higher memory address)<br>
 
-<img src="images/stack_n_heap.png" alt="alt text" width="500"><br>
+<img src="images/stack_n_heap.png" alt="alt text" width="250"><br>
