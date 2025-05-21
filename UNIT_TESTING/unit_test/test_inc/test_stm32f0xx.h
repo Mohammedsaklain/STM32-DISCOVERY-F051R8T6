@@ -3,6 +3,7 @@
 
 #include "stdint.h"
 
+/********************  RCC  ********************/
 typedef struct
 {
   volatile uint32_t CR;         /*!< RCC clock control register */
@@ -24,7 +25,6 @@ typedef struct
 extern RCC_TypeDef reg_sim_RCC;
 #define RCC (&reg_sim_RCC)
 
-/********************  RCC  ********************/
 #define  RCC_AHBENR_DMAEN                    ((uint32_t)0x00000001)        /*!< DMA clock enable */
 #define  RCC_AHBENR_DMA2EN                   ((uint32_t)0x00000002)        /*!< DMA2 clock enable */
 #define  RCC_AHBENR_SRAMEN                   ((uint32_t)0x00000004)        /*!< SRAM interface clock enable */
