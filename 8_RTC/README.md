@@ -37,4 +37,11 @@ So, PREDIV_S = 313(0x139) and PREDIV_A = 126(0x7F)
     RTC->PRER |= (0x7C<<16);    // PREDIV_A  - 124
     RTC->PRER |= (0x13F<<0);    // PREDIV_S  - 319
 ```
-
+4. Then follow below steps and exit from initialization mode, now free running mode
+``` C
+    RTC->CR &= ~(RTC_CR_FMT);       // Set to Hour Format to AM/PM
+    RTC->CR |= RTC_CR_TSE;          // Time stamp enable
+    RTC->ISR &= ~(RTC_ISR_INIT);    // Exit from Initialization mode, now free running mode
+    RTC->WPR = 0xFF;                // This should not only to be 0xFF, since writing wrong key reactivates the write protection
+    PWR->CR &= ~PWR_CR_DBP;         // Disable access to RTC register
+```
