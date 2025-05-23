@@ -8,5 +8,6 @@
     "timer_dr.h": "c",
     "uart.h":"c"
   },
+  "C_Cpp.errorSquiggles": "enabled",
   "cortex-debug.variableUseNaturalFormat": true
 }

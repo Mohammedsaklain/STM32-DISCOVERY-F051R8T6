@@ -1,1 +1,0 @@
-void Init_Ext_Int(void);
