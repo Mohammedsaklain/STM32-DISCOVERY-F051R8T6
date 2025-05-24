@@ -103,7 +103,6 @@ static void print_uint_hex(unsigned int n) {
 }
 
 /* Custom print Function*/
-
 void MS_printf(const char *format, ...) {
     va_list args;
     va_start(args, format);

@@ -1,5 +1,5 @@
-# file : Makefile
-# Date : 17/05/25 - 15:00
+# file : boot.mk
+# Date : 21/05/25 - 12:32
 
 # Compiler & Linker
 CC 		= arm-none-eabi-gcc
@@ -8,7 +8,7 @@ OBJCOPY = arm-none-eabi-objcopy
 SIZE	= arm-none-eabi-size
 
 # Outupt
-OUTPUT 	= UART_DBG_app_code
+OUTPUT 	= boot_code
 
 # Directories
 BUILD_DIR	= build
@@ -17,15 +17,14 @@ INC_DIRS	= -I. -Iinc -Idrivers
 BOOTLOADER_BIN_DIR = build
 
 # Source & Object files
-SRC = stm32f051r8_startup.c
+SRC = STM32_bootloader.c
 SRC+= $(wildcard $(SRC_DIR)/*.c)
 OBJ = $(patsubst %.c,$(BUILD_DIR)/%.o, $(notdir $(SRC)))
 
 # Flags
-CFLAGS 	= -g -mlittle-endian -mthumb -mcpu=cortex-m0 -mthumb-interwork -mfloat-abi=soft \
-		  -mfpu=fpv4-sp-d16 $(INC_DIRS) # -nostdlib
-LDFLAGS = -T stm32f051r8.ld -Wl,-Map=$(BUILD_DIR)/$(OUTPUT).map -lm -lgcc
-# -lm (for math functions) & -lgcc (for compiler support functions like integer division/multiplication)
+CFLAGS 	= -mlittle-endian -mthumb -mcpu=cortex-m0 -mthumb-interwork -mfloat-abi=soft \
+		  -mfpu=fpv4-sp-d16 -nostdlib $(INC_DIRS)
+LDFLAGS = -T bootloader.ld -Wl,-Map=$(BUILD_DIR)/$(OUTPUT).map
 
 # Help make find the sources
 vpath %.c $(SRC_DIR)
@@ -54,12 +53,14 @@ clean:
 	@ echo "Cleaning build directory..."
 	@ rm -f $(BUILD_DIR)/$(OUTPUT).bin $(BUILD_DIR)/$(OUTPUT).elf $(BUILD_DIR)/$(OUTPUT).map
 	@ rm -f $(wildcard $(BUILD_DIR)/*.o)
+	@ rm -f $(BUILD_DIR)/combined_flash.bin 
+# Remove combined binary too
 
-# Flash the application to its designated address (0x08000000)
+# Flash only the bootloader to its designated address (0x08000000)
 flash: $(BUILD_DIR)/$(OUTPUT).bin
-	@ echo "Flashing application to 0x08000000..."
+	@ echo "Flashing bootloader to 0x08000000..."
 	@ st-flash --reset write $(BUILD_DIR)/$(OUTPUT).bin 0x08000000
-	@ echo "Application flashing complete."
+	@ echo "bootloader flashing complete."
 
 info:
 	st-info --probe

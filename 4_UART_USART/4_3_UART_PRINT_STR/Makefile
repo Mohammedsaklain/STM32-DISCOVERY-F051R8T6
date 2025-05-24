@@ -1,4 +1,4 @@
-OUT = UART_PRINT
+OUT = UART_PRINT_STR
 CFLAGS = -T stm32f051r8.ld
 CFLAGS += -mlittle-endian -mthumb -mcpu=cortex-m0 -mthumb-interwork
 CFLAGS += -mfloat-abi=soft -mfpu=fpv4-sp-d16

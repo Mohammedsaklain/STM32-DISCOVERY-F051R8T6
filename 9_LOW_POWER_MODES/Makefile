@@ -8,7 +8,7 @@ OBJCOPY = arm-none-eabi-objcopy
 SIZE	= arm-none-eabi-size
 
 # Outupt
-OUTPUT 	= UART_DBG_app_code
+OUTPUT 	= LOW_PWR_app_code
 
 # Directories
 BUILD_DIR	= build
@@ -58,7 +58,9 @@ clean:
 # Flash the application to its designated address (0x08000000)
 flash: $(BUILD_DIR)/$(OUTPUT).bin
 	@ echo "Flashing application to 0x08000000..."
-	@ st-flash --reset write $(BUILD_DIR)/$(OUTPUT).bin 0x08000000
+#	@ st-flash --reset write $(BUILD_DIR)/$(OUTPUT).bin 0x08000000
+# This is usefull under Low power modes, why DBG & program interface of uC is shutdown
+	st-flash --connect-under-reset write $(BUILD_DIR)/$(OUTPUT).bin 0x08000000
 	@ echo "Application flashing complete."
 
 info:

@@ -24,12 +24,20 @@ void rcc_clock_config(void)
         RCC->APB2ENR |= RCC_APB2ENR_TIM15EN;
     #endif
 
-    #ifdef USART__1_CLK
+    #ifdef USART__2_CLK
         RCC->APB1ENR |= RCC_APB1ENR_USART2EN;
     #endif
 
     #ifdef I2C__1_2_APB1_CLK
         RCC->APB1ENR |= RCC_APB1ENR_I2C1EN;
+    #endif
+
+    #ifdef EXTERNAL_INTERRUPT
+        RCC->APB2ENR |= RCC_APB2ENR_SYSCFGEN;   // Enable SYSCFG clock, used for ext int.
+    #endif
+
+    #ifdef LOW_POWER_MODES
+        RCC->APB1ENR |= RCC_APB1ENR_PWREN;      // Power Interface clock enable
     #endif
 
     #ifdef RTC_CLK

@@ -1,18 +1,20 @@
-#include "rcc.h"
-#include "gpio.h"
-#include "uart.h"
+#include "main.h"
 
-/* Still Need to develop */
-
-int main()
-{
-	gpio_set();
-	Init_UART();
-
-	while(1)
-	{
-		MSprint("Hello Kaynes unit - %d",0);
-		for(int i=0;i<90000;i++);
+#ifndef HOST_UNIT_TEST
+	int main(){
+		UART_Init();
+		int a = 0;
+		while(1)
+		{
+			MS_printf("Hello from main %d\r\n",a);
+			for(int i=0;i<800000;i++){}
+			a++;
+		}
+		return 0;
+	}	
+#else	/* In origin, There should not be any infinite loops present*/
+	int origin(){
+		RTC_Start();
+		return 0;
 	}
-	return 0;
-}
+#endif

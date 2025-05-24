@@ -70,8 +70,8 @@ MEMORY
 You are now taking the application's vector table (which lives in Flash at 0x08004000) and copying it into the same RAM location (0x20000000) where the bootloader's vector table used to be. Since SRAM is still remapped to 0x00000000, the CPU will continue to fetch its vector table from 0x00000000 (which is now pointing to your application's vector table at 0x20000000 in RAM). This allows the application to use its own interrupt handlers
 6. Before updating the existing code or fallback to default application code, secure mechanisam to detect whether the application code is valid or not, if not, safely enter into infinite loop with indication through LED blinks.
 
-*** NOTE ***
+***NOTE***
 
 The Stack grows downwards(Higher memory address to lower) and Heap grows upwards(Lower memory address to Higher memory address)<br>
 
-<img src="images/stack_n_heap.png" alt="alt text" width="500"><br>
+<img src="images/stack_n_heap.png" alt="alt text" width="250"><br>
