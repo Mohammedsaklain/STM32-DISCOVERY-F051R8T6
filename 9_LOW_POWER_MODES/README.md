@@ -1,7 +1,7 @@
 ## Low Power Modes
 
 ### Project AIM:
-1. To operate in Sleep Mode
+1. To operate in Sleep, Stop and Standby Mode
 
 ### Setup
 

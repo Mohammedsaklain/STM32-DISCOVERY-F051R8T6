@@ -1,0 +1,102 @@
+MEMORY
+{
+    BOOTROM  (rx)   : ORIGIN = 0x08000000, LENGTH = 16K
+    RAM      (rwx)  : ORIGIN = 0x20000000, LENGTH = 8K
+}
+
+__bootrom_start__ = ORIGIN(BOOTROM);
+__bootrom_size__ = LENGTH(BOOTROM);
+
+SECTIONS
+{
+    .text :
+    {
+        . = ALIGN(4);
+        KEEP(*(.interrupt_vector))
+        *(.text)
+        *(.text*) 
+        *(.rodata)
+        *(.rodata*)
+        . = ALIGN(4);
+    } > BOOTROM
+
+    /* .init usually contains code that needs to be executed once */
+    /* Explicitly place .init section immediately after .text in FLASH, */
+    /* The linker often automatically creates an implicit .init section & adds after .text section */
+
+    .init :
+    {
+        . = ALIGN(4);
+        KEEP(*(.init))   /* Standard .init section */
+        KEEP(*(.init.*))
+        . = ALIGN(4);
+    } > BOOTROM
+
+    /* Contains code for global destructors */
+    .fini :
+    {
+        . = ALIGN(4);
+        KEEP(*(.fini))
+        KEEP(*(.fini.*))
+        . = ALIGN(4);
+    } > BOOTROM
+
+    /* This section contains information used for unwinding the stack ,*/
+    /* primarily for C++ exception handling and sometimes for debugging */
+    .eh_frame :
+    {
+        . = ALIGN(4);
+        KEEP(*(.eh_frame))
+        KEEP(*(.eh_frame.*))
+        . = ALIGN(4);
+    } > BOOTROM
+
+    /* .ARM.extab and .ARM.exidx are ARM-specific exception handling tables */
+    .ARM.extab :
+    {
+        . = ALIGN(4);
+        *(.ARM.extab*)
+        . = ALIGN(4);
+    } > BOOTROM
+
+    .ARM.exidx :
+    {
+        . = ALIGN(4);
+        *(.ARM.exidx*)
+        . = ALIGN(4);
+    } > BOOTROM
+    
+    _data_flash = .;
+    .data : AT ( _data_flash )
+    {
+        . = ALIGN(4);
+        _data_begin = .;
+        *(.data)
+        *(.data*)
+        . = ALIGN(4);
+        _data_end = .;
+    } > RAM
+
+    .bss :
+    {
+        _bss_begin = .;
+        __bss_start__ = _bss_begin;
+        *(.bss)
+        *(.bss*)
+        *(COMMON)
+        . = ALIGN(4);
+        _bss_end = .;
+        __bss_end__ = _bss_end;
+    } > RAM
+
+    _stack_size = 1024;
+    _stack_end = ORIGIN(RAM)+LENGTH(RAM);
+    _stack_begin = _stack_end - _stack_size;
+    . = _stack_begin;
+    ._stack :
+    {
+        . = . + _stack_size;
+    } > RAM
+}
+
+ENTRY(handler_reset)
