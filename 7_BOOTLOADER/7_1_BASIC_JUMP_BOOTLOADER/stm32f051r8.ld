@@ -1,7 +1,7 @@
 MEMORY
 {
     RAM     (rwx) : ORIGIN = 0x20000000, LENGTH = 8K
-    FLASH   (rx)  : ORIGIN = 0x08004000, LENGTH = 48K
+    FLASH   (rx)  : ORIGIN = 0x08004000, LENGTH = 44K
 }
 
 SECTIONS

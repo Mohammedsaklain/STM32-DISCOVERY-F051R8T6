@@ -1,7 +1,7 @@
-#include "main.h"      
 #include "boot.h"
+#include "main.h"
 #include "stm32f0xx.h"
-
+    
 extern unsigned long _stack_end; // Bootloader's stack end (for its own initial SP)
 extern unsigned long _data_flash;
 extern unsigned long _data_begin;
@@ -12,9 +12,8 @@ extern unsigned long _bss_begin;
 // Function prototypes
 void handler_default(void);
 void handler_reset(void);
-static void bootloader_main(void); // Declared static as it's not exposed
 bool application_valid(void);
-
+static void bootloader_main(void); // Declared static as it's not exposed
 
 /* Default handler for unused interrupts*/
 void handler_default(void){
@@ -67,12 +66,22 @@ void handler_reset(void){
     GPIOA->MODER &= ~(3U<<0); // Clear PA0 mode bits (set to input)
     GPIOA->PUPDR |= (2U<<0);  // Set PA0 to pull-down (0b10)
 
-    if((GPIOA->IDR & (1U<<0)) == (1U<<0)){
+    GPIOC->MODER &= ~((3U<<18) | (3U<<16)); /*PC9, PC8*/
+    GPIOC->MODER |=  ((1U<<18) | (1U<<16));
+
+    if((GPIOA->IDR & (1U<<0)) == 1){
         /* Bootloader pin is high, so enter into bootmode with bootloader_main fun.*/
         bootloader_main(); // This function will execute the bootloader's primary logic
     }else{
         /* Boot pin is not active, prepare to jump to application */
         __disable_irq(); // Disable interrupts during the jump process
+
+        /* Disable SysTick counter, interrupt, and clock source*/
+        SysTick->CTRL = 0;
+        SysTick->LOAD = 0;
+        SysTick->VAL  = 0;
+        __DSB();
+        __ISB();
 
         // The vector table is currently in RAM (0x20000000) and contains bootloader's handlers.
         // We need to OVERWRITE it with the application's vector table.
@@ -93,10 +102,8 @@ void handler_reset(void){
             // If the application is not valid, enter an infinite error loop
             // Ensure GPIOC clock is enabled if blinking LED, and set mode
             RCC->AHBENR |= RCC_AHBENR_GPIOCEN;
-            GPIOC->MODER &= ~(3U<<18); /*PC9 - LED for Boot code*/
-            GPIOC->MODER |=  (1U<<18);
             while(1){
-                for(volatile int i=0;i<8000;i++){}
+                for(volatile int i=0;i<80000;i++){}
                 GPIOC->ODR ^= (1U<<9); // Blink if no valid app
             }
         }
@@ -212,13 +219,10 @@ static void bootloader_main(void)
     // The bootloader's vector table is already in RAM at 0x20000000.
     // Any interrupts that fire while in bootloader_main will use this RAM table.
 
-    GPIOC->MODER &= ~(3U<<18); /*PC9 - LED for Boot code*/
-    GPIOC->MODER |=  (1U<<18); // Set PC9 to General purpose output mode
-
     /* LED blinks inorder to indicate controller entered boot mode*/
-    for(uint8_t i=0;i<5;i++)
+    for(uint8_t i=0;i<6;i++)
     {
-        GPIOC->ODR ^= (1U<<9); // PC9
+        GPIOC->ODR ^= (1U<<8); // PC9
         for(volatile int i=0;i<80000;i++){}
     }
 
@@ -231,6 +235,10 @@ static void bootloader_main(void)
         // If application is valid, jump to it (after bootloader specific tasks are done)
         __disable_irq(); // Disable interrupts before jumping
 
+        // Disable SysTick counter, interrupt, and clock source
+        SysTick->CTRL = 0;
+        SysTick->LOAD = 0;
+        SysTick->VAL = 0;
         // Re-copy Application's Vector Table from Flash to RAM (redundant if already done in handler_reset, but safe)
         volatile uint32_t *app_flash_vec_table = (volatile uint32_t*)APPLICATION_START_ADDR;
         volatile uint32_t *ram_vec_table_ptr_local = (volatile uint32_t*)RAM_VECTOR_TABLE_ADDR;

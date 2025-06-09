@@ -10,6 +10,7 @@ void rcc_clock_config(void)
     RCC->CFGR|= RCC_CFGR_PPRE_DIV1;             // NO HCLK divided
 
     RCC->APB2ENR |= RCC_APB2ENR_SYSCFGEN;       // SYSCFG clk enable(for vector table offsetting)
+    RCC->APB2ENR |= 1<<0;                       // Enable clock for System Clock Configuration(INT)
     #ifdef GPIO_CLK
         RCC->AHBENR  |= (RCC_AHBENR_GPIOAEN | RCC_AHBENR_GPIOCEN);     // Enable Clk for IO
     #endif

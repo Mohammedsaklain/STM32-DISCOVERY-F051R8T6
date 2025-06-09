@@ -7,13 +7,20 @@ extern unsigned long _bss_begin;
 extern unsigned long _bss_end;
 extern unsigned long _stack_end;
 
-void handler_default(void)
-{
-    while (1)
-    {
-    //loop
-    }
+extern unsigned long __flash_user_data_start__;
+extern unsigned long __flash_user_data_end__;
+
+
+// Function prototypes
+void handler_reset(void);
+void handler_default(void) __attribute__((weak));
+
+void rcc_clock_config(void);
+
+void handler_default(void){
+    while (1){}
 }
+
 void handler_reset(void){
     unsigned long *source;
     unsigned long *destination;
@@ -29,10 +36,6 @@ void handler_reset(void){
     main();
 }
 
-// Function prototypes
-void handler_reset(void);
-void handler_default(void) __attribute__((weak));
-
 // Exception and Interrupt Handler prototypes (weakly defined)
 void NMI_Handler(void) __attribute__((weak, alias("handler_default")));
 void HardFault_Handler(void) __attribute__((weak, alias("handler_default")));
@@ -43,11 +46,11 @@ void WWDG_IRQHandler(void) __attribute__((weak, alias("handler_default")));
 void PVD_IRQHandler(void) __attribute__((weak, alias("handler_default")));
 void RTC_IRQHandler(void) __attribute__((weak, alias("handler_default")));
 void FLASH_IRQHandler(void) __attribute__((weak, alias("handler_default")));
-void RCC_CRS_IRQHandler(void) __attribute__((weak, alias("handler_default")));
+void RCC_IRQHandler(void) __attribute__((weak, alias("handler_default")));
 void EXTI0_1_IRQHandler(void) __attribute__((weak, alias("handler_default")));
 void EXTI2_3_IRQHandler(void) __attribute__((weak, alias("handler_default")));
 void EXTI4_15_IRQHandler(void) __attribute__((weak, alias("handler_default")));
-void TSC_IRQHandler(void) __attribute__((weak, alias("handler_default")));
+void TS_IRQHandler(void) __attribute__((weak, alias("handler_default")));
 void DMA1_Channel1_IRQHandler(void) __attribute__((weak, alias("handler_default")));
 void DMA1_Channel2_3_IRQHandler(void) __attribute__((weak, alias("handler_default")));
 void DMA1_Channel4_5_IRQHandler(void) __attribute__((weak, alias("handler_default")));
@@ -67,7 +70,7 @@ void SPI1_IRQHandler(void) __attribute__((weak, alias("handler_default")));
 void SPI2_IRQHandler(void) __attribute__((weak, alias("handler_default")));
 void USART1_IRQHandler(void) __attribute__((weak, alias("handler_default")));
 void USART2_IRQHandler(void) __attribute__((weak, alias("handler_default")));
-void CEC_CAN_IRQHandler(void) __attribute__((weak, alias("handler_default")));
+void CEC_IRQHandler(void) __attribute__((weak, alias("handler_default")));
 
 __attribute__ ((section(".interrupt_vector")))
 void (* const table_interrupt_vector[])(void) =
@@ -92,11 +95,11 @@ void (* const table_interrupt_vector[])(void) =
     PVD_IRQHandler,            // 17: PVD_IRQHandler
     RTC_IRQHandler,            // 18: RTC_IRQHandler
     FLASH_IRQHandler,          // 19: FLASH_IRQHandler
-    RCC_CRS_IRQHandler,        // 20: RCC_CRS_IRQHandler
+    RCC_IRQHandler,            // 20: RCC_CRS_IRQHandler
     EXTI0_1_IRQHandler,        // 21: EXTI0_1_IRQHandler
     EXTI2_3_IRQHandler,        // 22: EXTI2_3_IRQHandler
     EXTI4_15_IRQHandler,       // 23: EXTI4_15_IRQHandler
-    TSC_IRQHandler,            // 24: TSC_IRQHandler
+    TS_IRQHandler,             // 24: TSC_IRQHandler
     DMA1_Channel1_IRQHandler,  // 25: DMA1_Channel1_IRQHandler
     DMA1_Channel2_3_IRQHandler,// 26: DMA1_Channel2_3_IRQHandler
     DMA1_Channel4_5_IRQHandler,// 27: DMA1_Channel4_5_IRQHandler
@@ -118,6 +121,6 @@ void (* const table_interrupt_vector[])(void) =
     USART1_IRQHandler,         // 43: USART1_IRQHandler
     USART2_IRQHandler,         // 44: USART2_IRQHandler
     0,                         // 45: Reserved
-    CEC_CAN_IRQHandler,        // 46: CEC_CAN_IRQHandler
+    CEC_IRQHandler,            // 46: CEC_CAN_IRQHandler
     0                          // 47: Reserved
 };

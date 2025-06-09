@@ -3,7 +3,7 @@
     "configurations": [
         {
             "cwd": "${workspaceFolder}",
-            "executable": "D:/C_C++_FILES/STM32/STM32_GIT/STM32-DISCOVERY-F051R8T6/T_UNIT_TEST/app_build/LCD16X02.elf",
+            "executable": "D:/C_C++_FILES/STM32/STM32_GIT/BRANCH_1_DISCOVERY-F051R8T6/T_UNIT_TEST/app_build/LCD16X02.elf",
             "name": "Debug with ST-Link",
             "request": "launch",
             "type": "cortex-debug",
@@ -17,18 +17,18 @@
         },
         {
             "cwd": "${workspaceFolder}",
-            "executable": "D:/C_C++_FILES/STM32/STM32_GIT/BRANCH_1_DISCOVERY-F051R8T6/T_UNIT_TEST/app_build/LCD16X02.elf",
+            "executable": "D:/C_C++_FILES/STM32/STM32_GIT/BRANCH_1_DISCOVERY-F051R8T6/T_UART_BOOTLOADER/build/boot_code.elf",
             "name": "Debug with OpenOCD",
             "request": "launch",
             "type": "cortex-debug",
             "device": "STM32F051R8T6",
-            "runToEntryPoint": "main",
+            "runToEntryPoint": "handler_reset",
             "showDevDebugOutput": "none",
             "servertype": "openocd",
             "svdFile": "D:/C_C++_FILES/STM32/STM32_TOOLS/stm32f0_svd/STM32F0_svd_V1.3/STM32F0x1.svd",
             "liveWatch": {
                 "enabled": true,
-                "samplesPerSecond": 4
+                "samplesPerSecond": 20
             },
             "configFiles": [
                 "D:/C_C++_FILES/STM32/STM32_TOOLS/openocd-v0.12.0-i686-w64-mingw32/share/openocd/scripts/interface/stlink.cfg",

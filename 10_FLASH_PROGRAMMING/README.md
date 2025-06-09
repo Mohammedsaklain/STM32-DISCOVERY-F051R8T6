@@ -17,7 +17,7 @@ The program and erase operations can be performed by below registers:
 
 #### Main Flash Memory Organization in STM32F0:
 
-<img src="docs/mem_org.png" alt="alt text" width="250"><br>
+<img src="docs/mem_org.png" alt="alt text" width="500"><br>
 
 As seen above, the Main flash memory is devided into 16 secotrs with each sector of 4KB size. We will make use of sector 15 since code and other program setting will be starting from lower address(0x08000000). 
 

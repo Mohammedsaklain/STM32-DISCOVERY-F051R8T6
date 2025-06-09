@@ -13,13 +13,13 @@
 
 1. Absence of VTOR in CM0 & CM0+ controllers: STM32F0 which is a ARM Cortex-M0 based chip, the Cortex-M0 doesn'nt have VTOR(Vetor Table Offset Register), which helps to relocate the vector table from it's default location(0x08000000) to other desired location, this makes design of Bootloader in such controller little tricky.<br>
 
-<img src="images/mem_boot_app.drawio.png" alt="alt text" width="500"><br>
+<img src="docs/mem_boot_app.drawio.png" alt="alt text" width="500"><br>
 
 2. Issue with Interrupts in existing design: If we follow the above design, after reset the program will enter into bootloader section(0x08000000), it'll define vector table and bootloader code in that memory and jump into application code region(0x08004000), In application code region also, there will be vector table defined and without any problems the control will be transferred from bootloader code to application code. The real problem occurs when any interrupt occurs, then the control will be tranferred to bootloader vector table, not with the application vector table. This results in undefined outputs.<br>
 
 ### D. Solution: 
 
-<img src="images/bootloader_flow.drawio.png" alt="alt text" width="500"><br>
+<img src="docs/bootloader_flow.drawio.png" alt="alt text" width="500"><br>
 
 1. Bootloader Vector Table(Flash @ 0x08000000) -- COPY --> Bootloader Vector table(RAM @ 0x20000000)
 2. Remap 0x20000000 (SRAM) to 0x00000000 using SYSCFG, From this point on, the CPU sees the bootloader's RAM based Vector table at 0x00000000
@@ -74,4 +74,25 @@ You are now taking the application's vector table (which lives in Flash at 0x080
 
 The Stack grows downwards(Higher memory address to lower) and Heap grows upwards(Lower memory address to Higher memory address)<br>
 
-<img src="images/stack_n_heap.png" alt="alt text" width="250"><br>
+<img src="docs/stack_n_heap.png" alt="alt text" width="250"><br>
+
+
+### To view .bin file
+``` 
+    hexdump -C filename.bin
+```
+
+<img src="docs/hexdump.png" alt="alt text" width="500"><br>
+
+### .bin file contents
+<img src="docs/hex_dump_1.png" alt="alt text" width="500"><br>
+
+1. The file is in little endian format
+2. each group of 1 byte with 16 in one column.
+3. As in above fiugure, from row 0000_0000 we have, 
+    a. 00 20 00 20 -> 20002000 = RAM Location<br>
+    b. 8F 01 00 08 -> 0800018F = Location of Reset Handler<br>
+
+Note: Here we got the reset Handler address as ***0800018F*** but in final .map file as shown below, we got the address of reset hadler to be ***0800018E***, which is + 1 extra, indicates to be Thumb mode of Execution.
+
+<img src="docs/reset_handler.png" alt="alt text" width="500"><br>

@@ -8,5 +8,4 @@
     // size of the vector table (16 core + 32 external IRQs for STM32F0)
     #define VECTOR_TABLE_SIZE_WORDS (16 + 32) // 48 entries
     #define VECTOR_TABLE_SIZE_BYTES (VECTOR_TABLE_SIZE_WORDS * 4) // 192 bytes
-
 #endif

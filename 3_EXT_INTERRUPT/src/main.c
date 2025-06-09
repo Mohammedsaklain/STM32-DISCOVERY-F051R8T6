@@ -4,14 +4,11 @@
 
 int main()
 {
-	rcc_clock_config();
-	gpio_set();
-	Init_Ext_Int();
-	int a = 80000;
+	GPIOC->MODER &= ~((3U<<16) | (3U<<18));
+	GPIOC->MODER |= ((1<<8) | (1<<9));
+	External_INT_Init();
 	while(1)
 	{
-		GPIOC->ODR ^= (1<<9);
-		for(int i=0;i<a;i++);
 	}
 	return 0;
 }
