@@ -17,7 +17,7 @@
         },
         {
             "cwd": "${workspaceFolder}",
-            "executable": "D:/C_C++_FILES/STM32/STM32_GIT/BRANCH_1_DISCOVERY-F051R8T6/T_UART_BOOTLOADER/build/boot_code.elf",
+            "executable": "D:/C_C++_FILES/STM32/STM32_GIT/STM32-DISCOVERY-F051R8T6/4_UART_USART/4_4_UART_PRINT_DBG/build/UART_DBG_app_code.elf",
             "name": "Debug with OpenOCD",
             "request": "launch",
             "type": "cortex-debug",
